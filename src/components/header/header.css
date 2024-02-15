@@ -1,0 +1,13 @@
+@import url('../../../src/style_variables.css');
+
+.header {
+    height: 75px;
+    width: 100%;
+    background-color: var(--white);
+}
+
+.logo-container {
+    height: 100%;
+    width: 40%;
+}
+

@@ -1,0 +1,17 @@
+:root {
+    --white: #F6F4E8;
+    --light-green: #BACEC1;
+    --light-orange: #E59560;
+    --dark-green: #1D3124;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}
