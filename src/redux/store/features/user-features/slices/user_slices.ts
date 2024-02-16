@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User, UserInitState } from "../interfaces/userFeatures_interfaces";
+import { RootState } from "../../../store/store";
 import axios from "axios";
 
 
@@ -15,11 +16,11 @@ const userInitState: UserInitState = {
     user,
     checkUserCookieStatus: 'idle',
     loginStatus: 'idle',
-    error: null
+    checkUserCookieError: null,
+    loginError: null
 };
 
 const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-
 
 export const checkUserCookie = createAsyncThunk("user/checkUserCookie", async (userId: string) => {
     try {
@@ -31,9 +32,15 @@ export const checkUserCookie = createAsyncThunk("user/checkUserCookie", async (u
     }
 })
 
-export const login = createAsyncThunk("user/login", async (formData: FormData) => {
+export const login = createAsyncThunk("auth/sign-in", async (formData: FormData) => {
     try {
-        const response = await axios.post(`${apiUrl}/users/login`, formData);
+        console.log(formData.get('email'))
+        const response = await axios.post(`${apiUrl}/auth/sign-in`, formData, {
+            headers: {
+                'Content-Type': 'application/json'
+              }
+        });
+        console.log(response);
         return response.data;
     } catch (err: any) {
         return err.message;
@@ -66,7 +73,7 @@ export const userSlice = createSlice({
             })
             .addCase(checkUserCookie.rejected, (state, action) => {
                 state.checkUserCookieStatus = 'failed';
-                state.error = action.payload
+                state.checkUserCookieError = action.payload
             })
             .addCase(login.pending, (state, _action) => {
                 state.loginStatus = 'loading';
@@ -77,10 +84,12 @@ export const userSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.loginStatus = 'failed';
-                state.error = action.payload
+                state.loginError = action.payload
             })
     }
 })
 
-export const {addUser} = userSlice.actions;
+
+export const getLoginStatus = (state: RootState) => state.user.loginStatus;
+export const getLoginError = (state: RootState) => state.user.loginError;
 export default userSlice.reducer;

@@ -1,0 +1,11 @@
+@import url('../../style_variables.css');
+
+.btn {
+    border: 0;
+    outline: 0;
+    border: 1px solid var(--light-grey);
+    background-color: var(--light-grey);
+    color: var(--light-orange);
+    border-radius: 8px;
+    padding: 3px;
+}

@@ -14,7 +14,8 @@ export interface UserInitState {
     user: User
     checkUserCookieStatus: RequestStatus
     loginStatus: RequestStatus
-    error: any
+    checkUserCookieError: any
+    loginError: any
 }
 
 export interface UserLoginData {
