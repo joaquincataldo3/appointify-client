@@ -1,0 +1,23 @@
+
+
+type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
+
+export interface User {
+    id: number | null
+    username: string
+    first_name: string
+    last_name: string
+    email: string
+}
+
+export interface UserInitState {
+    user: User
+    checkUserCookieStatus: RequestStatus
+    loginStatus: RequestStatus
+    error: any
+}
+
+export interface UserLoginData {
+    email: string
+    password: string
+}
