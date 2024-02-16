@@ -14,8 +14,8 @@
     font-family: "Open Sans", sans-serif;;
 }
 
-main {
-    min-height: 300px;
+#root {
+    min-height: 500px;
 }
 
 img {

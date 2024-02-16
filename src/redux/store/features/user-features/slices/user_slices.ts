@@ -17,7 +17,8 @@ const userInitState: UserInitState = {
     checkUserCookieStatus: 'idle',
     loginStatus: 'idle',
     checkUserCookieError: null,
-    loginError: null
+    loginError: null,
+    isMobileNavbarOpen: false
 };
 
 const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
@@ -59,7 +60,12 @@ export const login = createAsyncThunk("auth/sign-in", async (formData: FormData)
 export const userSlice = createSlice({
     name: 'user',
     initialState: userInitState,
-    reducers: { },
+    reducers: { 
+        toggleMobileNavbar(state){
+            console.log('llego')
+            state.isMobileNavbarOpen = !state.isMobileNavbarOpen
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(checkUserCookie.pending, (state, _action) => {
@@ -92,4 +98,6 @@ export const userSlice = createSlice({
 export const getLoginStatus = (state: RootState) => state.user.loginStatus;
 export const getLoginError = (state: RootState) => state.user.loginError;
 export const getUser = (state: RootState) => state.user.user;
-export default userSlice.reducer;
+export const getMobileNavbarOpenStatus = (state: RootState) => state.user.isMobileNavbarOpen;
+export const {toggleMobileNavbar} = userSlice.actions;
+ export default userSlice.reducer;

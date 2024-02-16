@@ -16,6 +16,7 @@ export interface UserInitState {
     loginStatus: RequestStatus
     checkUserCookieError: any
     loginError: any
+    isMobileNavbarOpen: boolean
 }
 
 export interface UserLoginData {

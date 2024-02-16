@@ -1,0 +1,20 @@
+.navbar-list {
+    position: fixed;
+    background-color: var(--light-green);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 0;
+    margin-left: 100%;
+    transition: margin-left .5s;
+}
+
+.navbar-list-active {
+    margin-left: 0;
+}
+
+.close-menu-container {
+    padding: 5%;
+    display: flex;
+    justify-content: end;
+}
