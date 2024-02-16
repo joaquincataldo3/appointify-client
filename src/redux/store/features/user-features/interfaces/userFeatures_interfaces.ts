@@ -21,3 +21,8 @@ export interface UserLoginData {
     email: string
     password: string
 }
+
+export interface UserInputEmpty {
+    emailEmpty: boolean
+    passwordEmpty: boolean
+}

@@ -15,3 +15,9 @@ img {
     height: 100%;
     width: 100%;
 }
+
+.input-error {
+    border: 0;
+    outline: 0;
+    border: 1px solid red;
+}
