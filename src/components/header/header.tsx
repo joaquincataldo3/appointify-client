@@ -1,3 +1,4 @@
+import { Navbar } from '../navbar/navbar';
 import './header.css';
 
 export const Header = () => {
@@ -7,6 +8,7 @@ export const Header = () => {
       <div className="logo-container">
         <img src="/logo/logo1.png" alt="AppointifyLogo" />
       </div>
+      <Navbar />
     </header>
   )
 }

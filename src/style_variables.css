@@ -57,7 +57,7 @@ img {
 .form-input {
     border: 0;
     outline: 0;
-    border: 1px solid var(--light-orange);
+    border: 1px solid var(--purple);
     width: 100%;
     padding: 3px;
     border-radius: 8px;
@@ -68,4 +68,9 @@ img {
     display: flex;
     justify-content: center;
     margin-top: 5%;
+}
+
+.error {
+    font-size: 0.875rem;
+    color: red;
 }

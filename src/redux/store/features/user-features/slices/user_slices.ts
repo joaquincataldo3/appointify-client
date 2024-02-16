@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { User, UserInitState } from "../interfaces/userFeatures_interfaces";
 import { RootState } from "../../../store/store";
 import axios from "axios";
@@ -22,9 +22,14 @@ const userInitState: UserInitState = {
 
 const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-export const checkUserCookie = createAsyncThunk("user/checkUserCookie", async (userId: string) => {
+export const checkUserCookie = createAsyncThunk("user/checkUserCookie", async () => {
     try {
-        const response = await axios.get(`${apiUrl}/users/${userId}`);
+        const response = await axios.get(`${apiUrl}/auth/check-cookie`, {
+            headers:  {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        });
         console.log(response);
         return response.data;
     } catch (err: any) {
@@ -34,16 +39,17 @@ export const checkUserCookie = createAsyncThunk("user/checkUserCookie", async (u
 
 export const login = createAsyncThunk("auth/sign-in", async (formData: FormData) => {
     try {
-        console.log(formData.get('email'))
         const response = await axios.post(`${apiUrl}/auth/sign-in`, formData, {
             headers: {
                 'Content-Type': 'application/json'
-              }
+            },
+            withCredentials: true
         });
-        console.log(response);
+       
         return response.data;
     } catch (err: any) {
-        return err.message;
+        const errorMsg = err.response.data.message;
+        throw new Error(errorMsg);
     }
     }
 )
@@ -53,15 +59,7 @@ export const login = createAsyncThunk("auth/sign-in", async (formData: FormData)
 export const userSlice = createSlice({
     name: 'user',
     initialState: userInitState,
-    reducers: {
-        addUser: (state, action: PayloadAction<{user: User}>) => {
-            const {user} = action.payload;
-            state.user.id = user.id
-            state.user.username = user.username
-            state.user.first_name = user.first_name;
-            state.user.last_name = user.last_name;
-        }
-    },
+    reducers: { },
     extraReducers(builder) {
         builder
             .addCase(checkUserCookie.pending, (state, _action) => {
@@ -79,12 +77,13 @@ export const userSlice = createSlice({
                 state.loginStatus = 'loading';
             })
             .addCase(login.fulfilled, (state, action) => {
+                state.loginError = null
                 state.loginStatus = 'succeeded';
                 state.user = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
                 state.loginStatus = 'failed';
-                state.loginError = action.payload
+                state.loginError = action.error.message;
             })
     }
 })
@@ -92,4 +91,5 @@ export const userSlice = createSlice({
 
 export const getLoginStatus = (state: RootState) => state.user.loginStatus;
 export const getLoginError = (state: RootState) => state.user.loginError;
+export const getUser = (state: RootState) => state.user.user;
 export default userSlice.reducer;

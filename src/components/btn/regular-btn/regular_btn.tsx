@@ -1,7 +1,7 @@
 
-import '../../style_variables.css';
 import { RegularBtnProps } from '../btn_interfaces';
-import './regular_btn.css';
+import '../btn.css';
+import '../../../style_variables.css';
 
 export const RegularBtn = (props: RegularBtnProps) => {
   

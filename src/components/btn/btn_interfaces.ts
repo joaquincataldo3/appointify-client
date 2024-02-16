@@ -4,7 +4,7 @@ export interface BtnProps {
 }
 
 export interface RegularBtnProps extends BtnProps {
-    handleClick?: () => {}
+    handleClick?: () => void
 }
 
 export interface FormBtnProps extends BtnProps {

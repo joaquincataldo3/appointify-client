@@ -1,4 +1,5 @@
 import { FormBtnProps } from '../btn_interfaces';
+import '../btn.css';
 import '../../../style_variables.css';
 
 export const FormBtn = (props: FormBtnProps) => {

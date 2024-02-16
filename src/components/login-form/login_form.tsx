@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { UserInputEmpty, UserLoginData } from "../../redux/store/features/user-features/interfaces/userFeatures_interfaces";
-import { getLoginStatus, login } from "../../redux/store/features/user-features/slices/user_slices";
+import { getLoginError, getLoginStatus, login } from "../../redux/store/features/user-features/slices/user_slices";
 import '../../style_variables.css';
 import { FormBtn } from "../btn/form-btn/form_btn";
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch } from "../../redux/store/store/store";
 import LoadingSpinner from "../loading-spinner/loading_spinner";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
 
   const dispatch = useDispatch<AppThunkDispatch>();
   const loginStatus = useSelector(getLoginStatus);
+  const navigate = useNavigate();
+  const loginError = useSelector(getLoginError);
   const [user, setUser] = useState<UserLoginData>({
     email: '',
     password: ''
@@ -19,6 +22,14 @@ export const LoginForm = () => {
     emailEmpty: false,
     passwordEmpty: false
   })
+
+  const handleDispatch = async (formData: FormData) => {
+    const result = await dispatch(login(formData));
+    const resultType = result.type;
+    if(resultType.includes('fulfilled')){
+      navigate('/')
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +56,7 @@ export const LoginForm = () => {
       let formData = new FormData();
       formData.append("email", user.email);
       formData.append("password", user.password);
-      dispatch(login(formData));
+      handleDispatch(formData);
     }
   }
 
@@ -72,12 +83,16 @@ export const LoginForm = () => {
           <label htmlFor="password" className="form-label">Contraseña</label>
           <input type="text" className={`${isInputsEmpty.emailEmpty && 'input-error'} form-input`} value={user.password} onChange={(e) => handleInputChange(e)} id="password" name="password" />
         </div>
+        {
+          loginError &&
+          <p className="error">{loginError}</p>
+        }
         <div className="form-btn-container">
           {
             loginStatus === 'loading' ?
-              <FormBtn content="Iniciar sesión" width={50} handleSubmit={handleSubmit} />
-              :
               <LoadingSpinner />
+              :
+              <FormBtn content="Iniciar sesión" width={50} handleSubmit={handleSubmit} />
           }
         </div>
       </form>

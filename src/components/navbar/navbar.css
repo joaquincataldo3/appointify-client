@@ -1,0 +1,10 @@
+.navbar {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger-menu {
+    font-size: 1.5rem;
+}

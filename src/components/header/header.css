@@ -1,13 +1,15 @@
 @import url('../../../src/style_variables.css');
 
 .header {
-    height: 75px;
+    height: 90px;
     width: 100%;
     background-color: var(--white);
+    display: flex;
+    justify-content: space-between;
 }
 
 .logo-container {
     height: 100%;
-    width: 40%;
+    width: 50%;
 }
 
