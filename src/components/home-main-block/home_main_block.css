@@ -1,0 +1,41 @@
+@import url('../../style_variables.css');
+
+.main-block-container {
+    text-align: center;
+    margin-top: 5%;
+    padding: 0 10%;
+}
+
+.page-title {
+    font-weight: 900;
+}
+
+.main-block-subtitle {
+    font-weight: 700;
+    color: var(--dark-grey);
+}
+
+.main-block-subtitle:first-child {
+  margin-top: 3%;
+}
+
+
+.avatars-container {
+   display: flex;
+}
+
+.avatar-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--light-grey);
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid var(--dark-grey);
+    background-color: var(--light-grey);
+}
