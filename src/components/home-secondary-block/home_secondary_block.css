@@ -1,0 +1,48 @@
+@import url('../../style_variables.css');
+
+.home-secondary-block-container {
+    margin-top: 15%;
+   
+}
+
+.dropdowns-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.secondary-block-title-container {
+    text-align: center;
+    padding: 0 5%;
+}
+
+.dropdown-item-container {
+    width: 90%;
+    padding: 2%;
+    text-align: center;
+    margin: 5% auto;
+    max-height: 80px;
+    border: 1px solid var(--purple);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: max-height .5s;
+}
+
+.dropdown-item-container h4 {
+    margin: 5% 0;
+}
+
+.dropdown-item-container-active {
+    max-height: 500px;
+}
+
+.dropdown-toggler {
+   opacity: 0;
+   transition: opacity .5s;
+   margin-top: 3%;
+}
+
+.dropdown-toggler-active {
+    opacity: 1;
+ }

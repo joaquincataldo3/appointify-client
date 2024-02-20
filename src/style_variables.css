@@ -29,6 +29,11 @@ img {
     text-transform: uppercase;
 }
 
+.page-subtitle {
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
 .input-error {
     border: 0;
     outline: 0;
