@@ -2,6 +2,8 @@ import { HomeDropdownInfo } from "./home_secondary_block_interfaces";
 import '../../style_variables.css';
 import './home_secondary_block.css';
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getUser } from "../../redux/store/features/user-features/slices/user_slices";
 
 const dropdownBlockInfo: HomeDropdownInfo[] = [
     {
@@ -24,6 +26,7 @@ const dropdownBlockInfo: HomeDropdownInfo[] = [
 export const HomeSecondaryBlock = () => {
 
     const [activeDropdown, setActiveDropdown] = useState<number>(0);
+    const user = useSelector(getUser);
 
     const handleDropdownClick = (step: number) => {
         if (step === activeDropdown) {
@@ -52,6 +55,12 @@ export const HomeSecondaryBlock = () => {
                     })
                 }
             </div>
+            {
+                !user.id &&
+                <div className="get-started-btn-container">
+                    <button className="get-started-btn"><a href="#">Empezá gratis !</a></button>
+                </div>
+            }
 
         </div>
     )

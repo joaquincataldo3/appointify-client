@@ -46,3 +46,24 @@
 .dropdown-toggler-active {
     opacity: 1;
  }
+
+ .get-started-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+ }
+
+.get-started-btn {
+    width: 50%;
+    padding: 5%;
+    background-color: var(--dark-green);
+    border-radius: 15px;
+}
+
+.get-started-btn a, .get-started-btn a:visited {
+   color: var(--white);
+   font-weight: 700;
+   font-size: 1.1rem;
+   text-decoration: none;
+}

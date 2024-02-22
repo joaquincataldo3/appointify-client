@@ -3,10 +3,10 @@
 .booking-steps-container {
     position: relative;
     overflow-x: hidden;
-    width: 100%;
+    width: 90%;
     height: 200px;
     display: flex;
-    margin-top: 10%;
+    margin: 10% auto;
     border: 1px solid var(--light-green);
 }
 

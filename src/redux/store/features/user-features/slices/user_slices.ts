@@ -1,5 +1,5 @@
-import { PayloadAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import { User, UserInitState } from "../interfaces/userFeatures_interfaces";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { UserInitState } from "../interfaces/userFeatures_interfaces";
 import { RootState } from "../../../store/store";
 import axios from "axios";
 
@@ -16,8 +16,10 @@ const userInitState: UserInitState = {
     user,
     checkUserCookieStatus: 'idle',
     loginStatus: 'idle',
+    logoutStatus: 'idle',
     checkUserCookieError: null,
     loginError: null,
+    logoutError: null,
     isMobileNavbarOpen: false
 };
 
@@ -26,12 +28,11 @@ const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 export const checkUserCookie = createAsyncThunk("user/checkUserCookie", async () => {
     try {
         const response = await axios.get(`${apiUrl}/auth/check-cookie`, {
-            headers:  {
+            headers: {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
         });
-        console.log(response);
         return response.data;
     } catch (err: any) {
         return err.message;
@@ -46,23 +47,36 @@ export const login = createAsyncThunk("auth/sign-in", async (formData: FormData)
             },
             withCredentials: true
         });
-       
+
         return response.data;
     } catch (err: any) {
         const errorMsg = err.response.data.message;
         throw new Error(errorMsg);
     }
+})
+
+export const logout = createAsyncThunk("auth/logout", async () => {
+    try {
+        await axios.post(`${apiUrl}/auth/logout`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        })
+    } catch (error: any) {
+        const errorMsg = error.response.data.message;
+        throw new Error(errorMsg);
     }
-)
+
+})
 
 // create slice toma 3 valores
 // name, initial state y reducers
 export const userSlice = createSlice({
     name: 'user',
     initialState: userInitState,
-    reducers: { 
-        toggleMobileNavbar(state){
-            console.log('llego')
+    reducers: {
+        toggleMobileNavbar(state) {
             state.isMobileNavbarOpen = !state.isMobileNavbarOpen
         }
     },
@@ -88,9 +102,21 @@ export const userSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
-                state.loginStatus = 'failed';
-                state.loginError = action.error.message;
+                state.logoutStatus = 'failed';
+                state.logoutError = action.error.message;
             })
+            .addCase(logout.pending, (state) => {
+                state.logoutStatus = 'loading';
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.logoutError = null
+                state.logoutStatus = 'succeeded';
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.logoutStatus = 'failed';
+                state.logoutError = action.error.message;
+            })
+            
     }
 })
 
@@ -99,5 +125,5 @@ export const getLoginStatus = (state: RootState) => state.user.loginStatus;
 export const getLoginError = (state: RootState) => state.user.loginError;
 export const getUser = (state: RootState) => state.user.user;
 export const getMobileNavbarOpenStatus = (state: RootState) => state.user.isMobileNavbarOpen;
-export const {toggleMobileNavbar} = userSlice.actions;
- export default userSlice.reducer;
+export const { toggleMobileNavbar } = userSlice.actions;
+export default userSlice.reducer;
